@@ -1,0 +1,44 @@
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+<div class="p-3">
+  <h2>Ma nouvelle adresse</h2>
+  <div class="alert alert-success" role="alert" *ngIf="successMsg">
+    <p>{{successMsg}}</p>
+  </div>
+  <div class="d-flex flex-row justify-content-between">
+    <div class="card p-3 col-6 me-1">
+      <h3>Nouvelle adresse</h3>
+      <div class="form-group">
+        <label for="rue">Rue</label>
+        <input type="text" class="form-control" id="rue" [(ngModel)]="adresse.rue" name="rue">
+      </div>
+      <div class="form-group">
+        <label for="complemnt">Complement</label>
+        <input type="text" class="form-control" id="complemnt" [(ngModel)]="adresse.complement" name="complemnt">
+      </div>
+      <div class="form-group">
+        <label for="codePostal">Code postal</label>
+        <input type="text" class="form-control" id="codePostal" [(ngModel)]="adresse.codePostal" name="codePostal">
+      </div>
+      <div class="mb-3">
+        <label for="ville" class="form-label">Ville</label>
+        <input type="text" class="form-control" id="ville" [(ngModel)]="adresse.ville" name="ville">
+      </div>
+      <div class="mb-3">
+        <label for="typeAdresse" class="form-label">Type adresse</label>
+        <input type="text" class="form-control" id="typeAdresse" [(ngModel)]="adresse.typeAdresse" name="typeAdresse">
+      </div>
+      <div class="d-flex justify-content-end mt-3">
+        <button (click)="cancel()" type="button" class="btn btn-link">
+          <em class="fas fa-times"></em>&nbsp;Back
+        </button>
+        <button (click)="addAdresse()" type="button" class="btn btn-danger">
+          <em class="fas fa-save"></em>&nbsp;Save
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+

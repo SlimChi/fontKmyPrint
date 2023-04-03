@@ -1,0 +1,24 @@
+<div class="p-3">
+  <h2>Lists Users</h2>
+
+  <div>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">EMAIL</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

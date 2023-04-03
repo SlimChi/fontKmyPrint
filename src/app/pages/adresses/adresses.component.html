@@ -1,0 +1,46 @@
+<style>
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .list-group-item .list-group-item-content {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .list-group-item .btn-danger {
+    margin-left: auto;
+  }
+</style>
+
+<div class="container">
+  <h1>Mes adresses</h1>
+
+  <div class="row">
+    <div class="col-md-4">
+      <div class="list-group">
+        <div class="list-group">
+          <a *ngFor="let ad of adresse" [routerLink]="['/user/update-adresse', ad.id]" class="list-group-item">
+            <div class="list-group-item-content">
+              <h4 class="list-group-item-heading">{{ ad.typeAdresse?.libelle }}</h4>
+              <p class="list-group-item-text">{{ ad.complement }}</p>
+              <p class="list-group-item-text">{{ ad.rue }}</p>
+              <p class="list-group-item-text">{{ ad.codePostal }} {{ ad.ville }}</p>
+            </div>
+            <button class="btn btn-sm btn-danger" (click)="ad.id !== undefined ? confirmDelete(ad.id) : null"><i class="fa fa-trash"></i></button>
+          </a>
+
+        </div>
+
+      </div>
+      <div class="text-center">
+        <button [routerLink]="['/user/add-adresse']" class="btn btn-primary">Ajouter une adresse</button>
+      </div>
+    </div>
+
+  </div>
+</div>

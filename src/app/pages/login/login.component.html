@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  <div class="row login-container justify-content-center align-items-center">
+    <div class="col-md-4 offset-md-1 card bg-light">
+      <h3 class="text-center">Se connecter</h3>
+      <hr>
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length">
+        <p *ngFor="let msg of errorMessage">{{msg}}</p>
+      </div>
+      <div class="form-group">
+        <label for="login" class="form-label">Adresse mail</label>
+        <input [(ngModel)]="authRequest.email"  type="email" class="form-control" id="login" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label for="motdepasseLogin" class="form-label">Mot de passe</label>
+        <input [(ngModel)]="authRequest.password"  class="form-control" id="motdepasseLogin" placeholder="mot de passe">
+      </div>
+      <div class="d-flex justify-content-between mb-3">
+        <button (click)="login()"  type="button" class="btn btn-primary" >
+          <em class="fas fa-sign-in-alt">&nbsp;Sign in</em>
+        </button>
+      </div>
+      <p class="btn-link" style="cursor: pointer" routerLink="/forgot-password">Mot de passe oublier ??</p>
+    </div>
+    <div class="col-md-1 d-flex align-items-center justify-content-center">
+      <div class="vertical-separator"></div>
+    </div>
+    <div class="col-md-4 card bg-light">
+      <h3 class="text-center">Créer un Compte</h3>
+      <hr>
+      <div class="alert alert-danger" role="alert" *ngIf="errorMessages.length">
+        <p *ngFor="let msg of errorMessages">{{msg}}</p>
+      </div>
+      <div class="form-group">
+        <label for="firstname" class="form-label">Nom</label>
+        <input [(ngModel)]="userDto.firstName"  type="text" class="form-control" id="firstname" placeholder="joe">
+      </div>
+      <div class="form-group">
+        <label for="lastname" class="form-label">Prénom</label>
+        <input [(ngModel)]="userDto.lastName"  type="text" class="form-control" id="lastname" placeholder="doe">
+      </div>
+      <div class="form-group">
+        <label for="register" class="form-label">Adresse mail</label>
+        <input [(ngModel)]="userDto.email"  type="text" class="form-control" id="register" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
+        <label for="motdepasseRegister" class="form-label">Mot de passe</label>
+        <input [(ngModel)]="userDto.password"  class="form-control" id="motdepasseRegister" placeholder="mot de passe">
+      </div>
+      <div class="d-flex justify-content-end mb-3 ">
+        <button (click)="register()" type="button" class="btn btn-primary">
+          Confirmer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
