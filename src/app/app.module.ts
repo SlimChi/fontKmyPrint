@@ -7,7 +7,7 @@ import { HomeComponent } from './pages/home/home.component';
 import {LoginComponent} from "./pages/login/login.component";
 import { PanierComponent } from './pages/panier/panier.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {AdminDashboardComponent} from "./admin/admin-dashboard/admin-dashboard.component";
 import {ManageUsersComponent} from "./admin/manage-users/manage-users.component";
@@ -25,6 +25,12 @@ import { ResponseResetPasswordComponent } from './pages/response-reset-password/
 import { AdressesComponent } from './pages/adresses/adresses.component';
 import { UpdateAdresseComponent } from './pages/update-adresse/update-adresse.component';
 import { AddAdresseComponent } from './pages/add-adresse/add-adresse.component';
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import { CommandeComponent } from './pages/commande/commande.component';
+import { PaimentComponent } from './pages/paiment/paiment.component';
+import { MoncompteComponent } from './pages/moncompte/moncompte.component';
+import { FooterComponent } from './pages/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -43,17 +49,24 @@ import { AddAdresseComponent } from './pages/add-adresse/add-adresse.component';
     AdressesComponent,
     UpdateAdresseComponent,
     AddAdresseComponent,
+    CommandeComponent,
+    PaimentComponent,
+    MoncompteComponent,
+    FooterComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatInputModule,
-    MatIconModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatInputModule,
+        MatIconModule,
+        MatOptionModule,
+        MatSelectModule,
+        ReactiveFormsModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

@@ -15,6 +15,9 @@ import {ResponseResetPasswordComponent} from "./pages/response-reset-password/re
 import {AdressesComponent} from "./pages/adresses/adresses.component";
 import {UpdateAdresseComponent} from "./pages/update-adresse/update-adresse.component";
 import {AddAdresseComponent} from "./pages/add-adresse/add-adresse.component";
+import {CommandeComponent} from "./pages/commande/commande.component";
+import {MoncompteComponent} from "./pages/moncompte/moncompte.component";
+import {PaimentComponent} from "./pages/paiment/paiment.component";
 
 
 const routes: Routes = [
@@ -24,6 +27,7 @@ const routes: Routes = [
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'response-password', component: ResponseResetPasswordComponent},
+  {path: 'commande', component: CommandeComponent},
 
 
   {
@@ -33,6 +37,7 @@ const routes: Routes = [
 
       {path: 'adminDashboard', component: AdminDashboardComponent},
       {path: 'users', component: ManageUsersComponent},
+      {path: 'profile', component: ProfileComponent},
       {
         path: '', redirectTo: 'dashboard',
         pathMatch: 'full'
@@ -44,14 +49,17 @@ const routes: Routes = [
     canActivate: [TokenGuardService],
     children: [
 
-      {path: 'profile', component: ProfileComponent, canActivate: [TokenGuardService]},
+      {path: 'profile', component: ProfileComponent},
       {path: 'panier', component: PanierComponent},
       {path: 'adresses', component: AdressesComponent},
       {path: 'update-adresse/:id', component: UpdateAdresseComponent},
       {path: 'add-adresse', component: AddAdresseComponent},
       {path: 'home', component: HomeComponent},
+      {path: 'commande', component: CommandeComponent},
+      {path: 'paiment', component: PaimentComponent},
+      {path: 'moncompte', component: MoncompteComponent},
       {
-        path: '', redirectTo: 'user/adresses',
+        path: '', redirectTo: 'user/home',
         pathMatch: 'full'
       }
     ]

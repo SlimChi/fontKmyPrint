@@ -1,14 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UserDto} from "../../swagger/services/models/user-dto";
-import {User} from "../../swagger/services/models/user";
 import {AdresseDto} from "../../swagger/services/models/adresse-dto";
-import {HttpClient} from "@angular/common/http";
-import {UserService} from "../../swagger/services/services/user.service";
-import {AddressService} from "../../swagger/services/services/address.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {HelperService} from "../../services/helper/helper.service";
-import {Adresse} from "../../swagger/services/models/adresse";
-import {Observable} from "rxjs";
+
+import {AddressService} from "../../swagger/services/services/address.service";
 
 @Component({
   selector: 'app-update-adresse',
@@ -17,16 +11,17 @@ import {Observable} from "rxjs";
 })
 export class UpdateAdresseComponent implements OnInit{
 
-  userDto: UserDto = {password: '', email: '', firstName: '', lastName: ''};
+  typesAdresses = [
+    { id: 1, nom: 'Adresse de livraison' },
+    { id: 2, nom: 'Adresse de facturation' }
+  ];
   adresse: AdresseDto = {id: 0, rue: '', ville: '', codePostal: ''};
   errorMessage: string | null = null;
   successMsg = '';
-  errorMessages: Array<string> = [];
   constructor(
     private adresseService: AddressService,
     private router: Router,
     private route: ActivatedRoute,
-    private helperService: HelperService
   ) { }
 
   ngOnInit(): void {
@@ -35,54 +30,41 @@ export class UpdateAdresseComponent implements OnInit{
   }
 
   getAdresseById(adresseId: number) {
-    this.adresseService.findById1({'address-id': adresseId})      .subscribe({
-        next: (data) => {
-          this.adresse = data;
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMessage = 'Error retrieving address details';
-        }
-      });
+    this.adresseService.findById({'address-id': adresseId})      .subscribe({
+      next: (data) => {
+        this.adresse = data;
+      },
+      error: (err) => {
+        console.error(err);
+        this.errorMessage = 'Error retrieving address details';
+      }
+    });
   }
 
   updateAdresse() {
     this.successMsg = '';
+    if (!this.adresse.rue || !this.adresse.codePostal || !this.adresse.ville || !this.adresse.typeAdresse) {
+      this.errorMessage = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
     if (this.adresse.id) {
-      this.adresseService.save2({
+      this.adresseService.save({
         body: this.adresse
 
       })
-      .subscribe({
+        .subscribe({
           next: () => {
-            this.successMsg = 'Votre adresse a été mise à jour';
+
+            this.router.navigate(['user/adresses']);
+
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error(err);
             this.errorMessage = 'Error updating address';
           }
         });
     }
   }
-
-  addAdresse() {
-    this.successMsg = '';
-    this.adresseService.save2({
-      body: this.adresse
-    })
-      .subscribe({
-        next: () => {
-          this.successMsg = 'Votre adresse a été ajoutée';
-          // rediriger vers la liste des adresses
-          this.router.navigate(['user/adresses']);
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMessage = 'Erreur lors de l\'ajout de l\'adresse';
-        }
-      });
-  }
-
 
 
   async cancel() {

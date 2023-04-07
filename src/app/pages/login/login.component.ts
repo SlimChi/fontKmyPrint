@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {UserDto} from "../../swagger/services/models/user-dto";
+
 import {AuthenticationRequest} from "../../swagger/services/models/authentication-request";
-import {AuthenticationService} from "../../swagger/services/services/authentication.service";
-import {UserService} from "../../swagger/services/services/user.service";
-import {AdminService} from "../../swagger/services/services/admin.service";
+
 import {TokenService} from "../../services/token-service/token.service";
 import {HelperService} from "../../services/helper/helper.service";
+import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
+import {RegisterRequest} from "../../swagger/services/models/register-request";
+import {AuthentificationService} from "../../swagger/services/services/authentification.service";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
 
 
 @Component({
@@ -16,8 +18,9 @@ import {HelperService} from "../../services/helper/helper.service";
 })
 export class LoginComponent implements OnInit {
 
-  userDto: UserDto = {firstName: '', lastName: '', email: '', password: ''};
-
+  userDto: RegisterRequest = {prenom: '', nom: '', email: '',password:''};
+  showPassword = false;
+  public rememberMe: boolean = false;
   authRequest: AuthenticationRequest = {};
   errorMessages: Array<string> = [];
   errorMessage: Array<string> = [];
@@ -26,9 +29,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private authService: AuthenticationService,
-    private userService: UserService,
-    private adminService: AdminService,
+    private authService: AuthentificationService,
+    private userService: UtilisateursService,
     private helperService: HelperService,
     private tokenService: TokenService
   ) {
@@ -46,6 +48,16 @@ export class LoginComponent implements OnInit {
     }).subscribe({
       next: async (data) => {
         localStorage.setItem('token', data.token as string);
+
+        if (this.rememberMe) {
+          console.log(data.token)
+          // If "remember me" is checked, save the token in a cookie
+          this.tokenService.savetokenInCookie(data.token as string);
+        } else {
+          // Otherwise, save the token in localStorage
+          this.tokenService.savetoken(data.token as string);
+        }
+
         this.tokenService.savetoken(data.token as string)
         const helper = new JwtHelperService();
         const decodedToken = helper.decodeToken(<string>data.token);
@@ -54,6 +66,8 @@ export class LoginComponent implements OnInit {
           await this.router.navigate(['admin/users']);
         } else {
           await this.router.navigate(['user/profile']);
+          window.location.reload();
+
         }
       },
       error: (err) => {
@@ -66,18 +80,23 @@ export class LoginComponent implements OnInit {
   register() {
     this.errorMessages = [];
 
-    this.userService.registerUser({
-        body: this.userDto
-      }
-    ).subscribe({
+    this.authService.registerUser({
+      body: this.userDto
+    }).subscribe({
       next: async (data) => {
         await this.router.navigate(['confirm-register']);
+        alert('Enregistrement réussi !');
       },
       error: (err) => {
         console.log(err);
         this.errorMessages = err.error.validationErrors;
+        alert('Échec de l\'enregistrement.');
       }
     });
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
   }
 
 }

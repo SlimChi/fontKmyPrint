@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {UserService} from "../../swagger/services/services/user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {NewPassword} from "../../swagger/services/models/new-password";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
 
 @Component({
   selector: 'app-reset-password',
@@ -14,26 +14,30 @@ export class ResetPasswordComponent implements OnInit {
   newPassword: NewPassword = {};
   token?: string;
   tokenUrl = '';
+  successMsg = '';
 
   ngOnInit(): void {
     this.tokenUrl = this.route.snapshot.queryParams['token'];
     this.newPassword.tokenPassword = this.tokenUrl;
   }
 
-  constructor(private auth: UserService,
+  constructor(private auth: UtilisateursService,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
+
   resetPassword() {
     this.auth.resetPassword({
       token: this.tokenUrl,
-      body:  this.newPassword
+      body: this.newPassword
     }).subscribe({
       next: async (data) => {
+        this.successMsg = 'Votre mot de passe a été mis à jour';
         await this.router.navigate(['login']);
+     ;
       },
-      error: (err) => {
+      error: (err: { error: { validationErrors: string[]; }; }) => {
         console.log(err);
         this.errorMessages = err.error.validationErrors;
       }

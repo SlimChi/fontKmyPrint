@@ -25,7 +25,7 @@ export class MailControllerService extends BaseService {
   /**
    * Path part for operation emailSending
    */
-  static readonly EmailSendingPath = '/mail';
+  static readonly EmailSendingPath = '/mail/mail';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.

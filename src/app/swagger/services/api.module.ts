@@ -4,11 +4,20 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
-import { UserService } from './services/user.service';
+import { UtilisateursService } from './services/utilisateurs.service';
+import { TypeOptionsService } from './services/type-options.service';
+import { StatusesService } from './services/statuses.service';
+import { OptionsService } from './services/options.service';
+import { OptionLigneCommandesService } from './services/option-ligne-commandes.service';
+import { OptionCategoriesService } from './services/option-categories.service';
+import { LigneCommandesService } from './services/ligne-commandes.service';
+import { CommandesService } from './services/commandes.service';
+import { CategoriesService } from './services/categories.service';
 import { AddressService } from './services/address.service';
-import { AdminService } from './services/admin.service';
 import { MailControllerService } from './services/mail-controller.service';
-import { AuthenticationService } from './services/authentication.service';
+import { IntervenirsService } from './services/intervenirs.service';
+import { FichiersService } from './services/fichiers.service';
+import { AuthentificationService } from './services/authentification.service';
 
 /**
  * Module that provides all services and configuration.
@@ -18,11 +27,20 @@ import { AuthenticationService } from './services/authentication.service';
   exports: [],
   declarations: [],
   providers: [
-    UserService,
+    UtilisateursService,
+    TypeOptionsService,
+    StatusesService,
+    OptionsService,
+    OptionLigneCommandesService,
+    OptionCategoriesService,
+    LigneCommandesService,
+    CommandesService,
+    CategoriesService,
     AddressService,
-    AdminService,
     MailControllerService,
-    AuthenticationService,
+    IntervenirsService,
+    FichiersService,
+    AuthentificationService,
     ApiConfiguration
   ],
 })

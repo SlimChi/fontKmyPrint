@@ -88,24 +88,24 @@ export class AddressService extends BaseService {
   }
 
   /**
-   * Path part for operation save2
+   * Path part for operation save
    */
-  static readonly Save2Path = '/adresses/';
+  static readonly SavePath = '/adresses/';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `save2()` instead.
+   * To access only the response body, use `save()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  save2$Response(params: {
+  save$Response(params: {
     body: AdresseDto
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<number>> {
 
-    const rb = new RequestBuilder(this.rootUrl, AddressService.Save2Path, 'post');
+    const rb = new RequestBuilder(this.rootUrl, AddressService.SavePath, 'post');
     if (params) {
       rb.body(params.body, 'application/json');
     }
@@ -124,41 +124,41 @@ export class AddressService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `save2$Response()` instead.
+   * To access the full response (for headers, for example), `save$Response()` instead.
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  save2(params: {
+  save(params: {
     body: AdresseDto
   },
   context?: HttpContext
 
 ): Observable<number> {
 
-    return this.save2$Response(params,context).pipe(
+    return this.save$Response(params,context).pipe(
       map((r: StrictHttpResponse<number>) => r.body as number)
     );
   }
 
   /**
-   * Path part for operation findById1
+   * Path part for operation findById
    */
-  static readonly FindById1Path = '/adresses/{address-id}';
+  static readonly FindByIdPath = '/adresses/{address-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `findById1()` instead.
+   * To access only the response body, use `findById()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById1$Response(params: {
+  findById$Response(params: {
     'address-id': number;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<AdresseDto>> {
 
-    const rb = new RequestBuilder(this.rootUrl, AddressService.FindById1Path, 'get');
+    const rb = new RequestBuilder(this.rootUrl, AddressService.FindByIdPath, 'get');
     if (params) {
       rb.path('address-id', params['address-id'], {});
     }
@@ -177,41 +177,41 @@ export class AddressService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `findById1$Response()` instead.
+   * To access the full response (for headers, for example), `findById$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  findById1(params: {
+  findById(params: {
     'address-id': number;
   },
   context?: HttpContext
 
 ): Observable<AdresseDto> {
 
-    return this.findById1$Response(params,context).pipe(
+    return this.findById$Response(params,context).pipe(
       map((r: StrictHttpResponse<AdresseDto>) => r.body as AdresseDto)
     );
   }
 
   /**
-   * Path part for operation delete1
+   * Path part for operation delete2
    */
-  static readonly Delete1Path = '/adresses/{address-id}';
+  static readonly Delete2Path = '/adresses/{address-id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `delete1()` instead.
+   * To access only the response body, use `delete2()` instead.
    *
    * This method doesn't expect any request body.
    */
-  delete1$Response(params: {
+  delete2$Response(params: {
     'address-id': number;
   },
   context?: HttpContext
 
 ): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, AddressService.Delete1Path, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, AddressService.Delete2Path, 'delete');
     if (params) {
       rb.path('address-id', params['address-id'], {});
     }
@@ -230,18 +230,18 @@ export class AddressService extends BaseService {
 
   /**
    * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `delete1$Response()` instead.
+   * To access the full response (for headers, for example), `delete2$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  delete1(params: {
+  delete2(params: {
     'address-id': number;
   },
   context?: HttpContext
 
 ): Observable<void> {
 
-    return this.delete1$Response(params,context).pipe(
+    return this.delete2$Response(params,context).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }

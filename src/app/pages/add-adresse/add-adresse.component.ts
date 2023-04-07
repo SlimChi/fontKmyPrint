@@ -1,11 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {UserDto} from "../../swagger/services/models/user-dto";
 import {AdresseDto} from "../../swagger/services/models/adresse-dto";
-import {AddressService} from "../../swagger/services/services/address.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HelperService} from "../../services/helper/helper.service";
-import {UserService} from "../../swagger/services/services/user.service";
-import {User} from "../../swagger/services/models/user";
+import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+import {AddressService} from "../../swagger/services/services/address.service";
+import {forkJoin} from "rxjs";
+import {TypeAdresse} from "../../swagger/services/models/type-adresse";
+
 
 @Component({
   selector: 'app-add-adresse',
@@ -13,72 +15,79 @@ import {User} from "../../swagger/services/models/user";
   styleUrls: ['./add-adresse.component.css']
 })
 export class AddAdresseComponent implements OnInit{
-
-  adresse: AdresseDto = {id: 0, rue: '', ville: '', codePostal: ''};
+  typesAdresses = [
+    { id: 1, nom: 'Adresse de livraison' },
+    { id: 2, nom: 'Adresse de facturation' }
+  ];
+  adresse: AdresseDto = {};
+  adresse2: Array<AdresseDto> = [];
   errorMessage: string | null = null;
   successMsg = '';
+  typesAdresse: Array<TypeAdresse> = []; // étape 1
 
-  userDto: UserDto = {password: '', email: '', firstName: '', lastName: ''};
-  user: User = {email: '', firstName: '', lastName: ''};
+  userDto: unknown = {email: '', nom: '', prenom: ''};
+  user: UtilisateurDto = {email: '', nom: '', prenom: ''};
 
-  users: Array<UserDto> = [];
+  users: Array<UtilisateurDto> = [];
 
   constructor(
     private adresseService: AddressService,
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService,
+    private userService: UtilisateursService,
     private helperService: HelperService
 
   ) { }
 
   ngOnInit(): void {
-    this.findUserById();
-    console.log(this.helperService.userId);
+    this.findById();
+    console.log(this.helperService.userId)
+    console.log( this.findById())
+
+  }
+
+  private findById() {
+    forkJoin([
+      this.userService.getUtilisateurById({
+        "idUtilisateur": this.helperService.userId}),
+      this.adresseService.findAll1() // étape 2
+    ]).subscribe({
+      next: ([userData, typesAdresseData]) => {
+        this.userDto = userData;
+        this.typesAdresse = typesAdresseData;
+      },
+      error: (err) => {
+        console.error(err);
+        // handle the error scenario here
+      }
+    });
   }
 
   addAdresse() {
     this.successMsg = '';
-    const adresseDto: AdresseDto = {
-      codePostal: this.adresse.codePostal,
-      complement: this.adresse.complement,
-      rue: this.adresse.rue,
-      ville: this.adresse.ville,
-      typeAdresse: this.adresse.typeAdresse, // Ajout de typeAdresse
-      userId: this.helperService.userId
-    };
-
-    this.userService.addAdresseToUser({
-      body: adresseDto
-    })
-      .subscribe({
+    const userId = this.helperService.userId;
+    if (!this.adresse.rue || !this.adresse.codePostal || !this.adresse.ville || !this.adresse.typeAdresse) {
+      this.errorMessage = 'Veuillez remplir tous les champs obligatoires.';
+      return;
+    }
+    if (!this.adresse.id) {
+      this.adresse.utilisateurId = userId;
+      this.adresseService.save({
+        body: this.adresse
+      }).subscribe({
         next: () => {
-          this.successMsg = 'Votre adresse a été ajoutée';
-          // rediriger vers la liste des adresses
           this.router.navigate(['user/adresses']);
+          alert('Votre adresse a été ajoutée avec succès !');
         },
         error: (err) => {
           console.error(err);
-          this.errorMessage = 'Erreur lors de l\'ajout de l\'adresse';
+          this.errorMessage = "Impossible d'ajouter votre adresse";
+          alert("Impossible d'ajouter votre adresse.");
         }
       });
+    }
   }
 
-  private findUserById() {
-    this.userService.findById(
-      {"user-id": this.helperService.userId})
-      .subscribe({
-        next: (data) => {
-          this.userDto = data;
-          console.log(data);
-
-        },
-        error: (err) => {
-          console.error(err);
-          // handle the error scenario here
-        }
-      });
-  }
 
 
   async cancel() {

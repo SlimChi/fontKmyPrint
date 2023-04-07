@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserDto} from "../../swagger/services/models/user-dto";
-import {UserService} from "../../swagger/services/services/user.service";
+import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+
 
 @Component({
   selector: 'app-manage-users',
@@ -8,10 +9,10 @@ import {UserService} from "../../swagger/services/services/user.service";
 })
 export class ManageUsersComponent implements OnInit {
 
-  users: Array<UserDto> = [];
+  users: Array<UtilisateurDto> = [];
 
   constructor(
-    private userService: UserService,
+    private userService: UtilisateursService,
   ) { }
 
   ngOnInit(): void {
@@ -19,7 +20,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   private findAllusers() {
-    this.userService.findAll()
+    this.userService.getUtilisateurs()
       .subscribe({
         next: (value) => {
           this.users = value;

@@ -5,8 +5,8 @@ export interface Adresse {
   codePostal?: string;
   complement?: string;
   id?: number;
+  idUtilisateur?: number;
   rue?: string;
   typeAdresse?: TypeAdresse;
-  user?: number;
   ville?: string;
 }

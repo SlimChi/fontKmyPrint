@@ -15,31 +15,17 @@
       "bearerAuth": [ ]
     }
   ],
-  "tags": [
-    {
-      "name": "authentication"
-    },
-    {
-      "name": "user"
-    },
-    {
-      "name": "address"
-    },
-    {
-      "name": "admin"
-    }
-  ],
   "paths": {
-    "/users/update/{user-id}": {
+    "/utilisateurs/{idUtilisateur}/updatepassword": {
       "put": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
-        "operationId": "updateUser",
+        "operationId": "updatePasswordUtilisateurById",
         "parameters": [
           {
-            "name": "id",
-            "in": "query",
+            "name": "idUtilisateur",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
@@ -51,7 +37,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/PasswordDto"
               }
             }
           },
@@ -63,7 +49,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "type": "string"
                 }
               }
             }
@@ -71,12 +57,53 @@
         }
       }
     },
-    "/users/UpdateUserById/{user-id}": {
+    "/utilisateurs/{idUtilisateur}/update": {
       "put": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
-        "operationId": "updateUser_1",
+        "operationId": "updateUtilisateurById",
+        "parameters": [
+          {
+            "name": "idUtilisateur",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertUtilisateurDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/utilisateurs/UpdateUserById/{idUtilisateur}": {
+      "put": {
+        "tags": [
+          "Utilisateurs"
+        ],
+        "operationId": "updateUser",
         "parameters": [
           {
             "name": "id",
@@ -109,6 +136,690 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "telephone",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/typeoptions/{idOption}/{idTypeOption}": {
+      "get": {
+        "tags": [
+          "TypeOptions"
+        ],
+        "operationId": "getTypeOptionsById",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTypeOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "TypeOptions"
+        ],
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTypeOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TypeOptionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TypeOptions"
+        ],
+        "operationId": "deleteById",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "idTypeOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/statuses/{idStatus}": {
+      "get": {
+        "tags": [
+          "Statuses"
+        ],
+        "operationId": "getStatusById",
+        "parameters": [
+          {
+            "name": "idStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Statuses"
+        ],
+        "operationId": "updateStatus",
+        "parameters": [
+          {
+            "name": "idStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Statuses"
+        ],
+        "operationId": "deleteStatus",
+        "parameters": [
+          {
+            "name": "idStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/options/{idOption}": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "operationId": "getOptionsById",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Options"
+        ],
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Options"
+        ],
+        "operationId": "deleteById_1",
+        "parameters": [
+          {
+            "name": "idOption",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/optionlignecommandes/{numeroCommande}/{numeroLigneCommande}": {
+      "get": {
+        "tags": [
+          "OptionLigneCommandes"
+        ],
+        "operationId": "getAllByNumeros",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "numeroLigneCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OptionLigneCommandes"
+        ],
+        "operationId": "updateTypeOptions",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "numeroLigneCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TypeOptionDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/optioncategories/{idCategorie}": {
+      "get": {
+        "tags": [
+          "OptionCategories"
+        ],
+        "operationId": "getOptionsCategoriesByIdCategorie",
+        "parameters": [
+          {
+            "name": "idCategorie",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "OptionCategories"
+        ],
+        "operationId": "updateOptions",
+        "parameters": [
+          {
+            "name": "idCategorie",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TypeOptionDto"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lignecommandes/{numeroCommande}/{numeroLigneCommande}/{newIdStatus}": {
+      "put": {
+        "tags": [
+          "LigneCommandes"
+        ],
+        "operationId": "updateStatus_1",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "numeroLigneCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "newIdStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commandes/{numeroCommande}/{newIdStatus}": {
+      "put": {
+        "tags": [
+          "Commandes"
+        ],
+        "operationId": "updateStatus_2",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "newIdStatus",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories/{idCategorie}": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "getCategorieById",
+        "parameters": [
+          {
+            "name": "idCategorie",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "updateCategorie",
+        "parameters": [
+          {
+            "name": "idCategorie",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategorieDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "deleteMapping",
+        "parameters": [
+          {
+            "name": "idCategorie",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -189,117 +900,10 @@
         }
       }
     },
-    "/admin/": {
-      "get": {
-        "tags": [
-          "admin"
-        ],
-        "operationId": "findAll_2",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserDto"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "admin"
-        ],
-        "operationId": "save",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/admin/UpdateAdminById": {
-      "put": {
-        "tags": [
-          "admin"
-        ],
-        "operationId": "updateUser_2",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "firstName",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "lastName",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "email",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/{id}/addAdresseToUser": {
+    "/utilisateurs/{id}/addAdresseToUser": {
       "post": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
         "operationId": "addAdresseToUser",
         "requestBody": {
@@ -326,16 +930,16 @@
         }
       }
     },
-    "/users/resetPassword": {
+    "/utilisateurs/resetPassword/{token}": {
       "post": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
         "operationId": "resetPassword",
         "parameters": [
           {
             "name": "token",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -366,40 +970,10 @@
         }
       }
     },
-    "/users/register": {
+    "/utilisateurs/checkEmail": {
       "post": {
         "tags": [
-          "user"
-        ],
-        "operationId": "registerUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDto"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/users/checkEmail": {
-      "post": {
-        "tags": [
-          "user"
+          "Utilisateurs"
         ],
         "operationId": "resetPasswordEmail",
         "requestBody": {
@@ -426,22 +1000,19 @@
         }
       }
     },
-    "/users/": {
+    "/typeoptions": {
       "get": {
         "tags": [
-          "user"
+          "TypeOptions"
         ],
-        "operationId": "findAll",
+        "operationId": "getTypeOptions",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UserDto"
-                  }
+                  "type": "string"
                 }
               }
             }
@@ -450,14 +1021,14 @@
       },
       "post": {
         "tags": [
-          "user"
+          "TypeOptions"
         ],
-        "operationId": "save_1",
+        "operationId": "insert",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/UserDto"
+                "$ref": "#/components/schemas/TypeOptionDto"
               }
             }
           },
@@ -469,8 +1040,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "integer",
-                  "format": "int32"
+                  "type": "string"
                 }
               }
             }
@@ -478,7 +1048,255 @@
         }
       }
     },
-    "/mail": {
+    "/statuses": {
+      "get": {
+        "tags": [
+          "Statuses"
+        ],
+        "operationId": "getStatuses",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Statuses"
+        ],
+        "operationId": "insertStatus",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StatusDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/options": {
+      "get": {
+        "tags": [
+          "Options"
+        ],
+        "operationId": "getOptions",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Options"
+        ],
+        "operationId": "insert_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/optionlignecommandes": {
+      "get": {
+        "tags": [
+          "OptionLigneCommandes"
+        ],
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OptionLigneCommandes"
+        ],
+        "operationId": "insert_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionLigneCommandeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OptionLigneCommandes"
+        ],
+        "operationId": "delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionLigneCommandeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/optioncategories": {
+      "get": {
+        "tags": [
+          "OptionCategories"
+        ],
+        "operationId": "getOptionsCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "OptionCategories"
+        ],
+        "operationId": "insert_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionCategorieDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "OptionCategories"
+        ],
+        "operationId": "delete_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptionCategorieDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/mail/mail": {
       "post": {
         "tags": [
           "mail-controller"
@@ -528,10 +1346,318 @@
         }
       }
     },
+    "/lignecommandes": {
+      "get": {
+        "tags": [
+          "LigneCommandes"
+        ],
+        "operationId": "getAll_1",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "LigneCommandes"
+        ],
+        "operationId": "insert_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertLigneCommandeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/intervenirs": {
+      "get": {
+        "tags": [
+          "Intervenirs"
+        ],
+        "operationId": "getAll_2",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Intervenirs"
+        ],
+        "operationId": "insert_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertIntervenirDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fichiers": {
+      "get": {
+        "tags": [
+          "Fichiers"
+        ],
+        "operationId": "getFichiers",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Fichiers"
+        ],
+        "operationId": "uploadFile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commandes": {
+      "get": {
+        "tags": [
+          "Commandes"
+        ],
+        "operationId": "getCommandes",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Commandes"
+        ],
+        "operationId": "insert_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InsertCommandeDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "getCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "operationId": "insertCategorie",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategorieDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentification"
+        ],
+        "operationId": "registerUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register/admin": {
+      "post": {
+        "tags": [
+          "Authentification"
+        ],
+        "operationId": "registerAdmin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/authenticate": {
       "post": {
         "tags": [
-          "authentication"
+          "Authentification"
         ],
         "operationId": "authenticate",
         "requestBody": {
@@ -563,7 +1689,7 @@
         "tags": [
           "address"
         ],
-        "operationId": "save_2",
+        "operationId": "save",
         "requestBody": {
           "content": {
             "application/json": {
@@ -589,29 +1715,22 @@
         }
       }
     },
-    "/admin/register": {
-      "post": {
+    "/utilisateurs": {
+      "get": {
         "tags": [
-          "admin"
+          "Utilisateurs"
         ],
-        "operationId": "registerAdmin",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDto"
-              }
-            }
-          },
-          "required": true
-        },
+        "operationId": "getUtilisateurs",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AuthenticationResponse"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtilisateurDto"
+                  }
                 }
               }
             }
@@ -619,15 +1738,15 @@
         }
       }
     },
-    "/users/{user-id}": {
+    "/utilisateurs/{idUtilisateur}": {
       "get": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
-        "operationId": "findById",
+        "operationId": "getUtilisateurById",
         "parameters": [
           {
-            "name": "user-id",
+            "name": "idUtilisateur",
             "in": "path",
             "required": true,
             "schema": {
@@ -642,21 +1761,46 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserDto"
+                  "type": "string"
                 }
               }
             }
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/utilisateurs/findall": {
+      "get": {
         "tags": [
-          "user"
+          "Utilisateurs"
         ],
-        "operationId": "delete",
+        "operationId": "findAll",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UtilisateurDto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lignecommandes/{numeroCommande}": {
+      "get": {
+        "tags": [
+          "LigneCommandes"
+        ],
+        "operationId": "getAllByNumeroCommande",
         "parameters": [
           {
-            "name": "user-id",
+            "name": "numeroCommande",
             "in": "path",
             "required": true,
             "schema": {
@@ -667,7 +1811,213 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lignecommandes/{numeroCommande}/{numeroLigneCommande}": {
+      "get": {
+        "tags": [
+          "LigneCommandes"
+        ],
+        "operationId": "getByNumeros",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "numeroLigneCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/intervenirs/{numeroCommande}": {
+      "get": {
+        "tags": [
+          "Intervenirs"
+        ],
+        "operationId": "getAllByNumeroCommande_1",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fichiers/{idFichier}": {
+      "get": {
+        "tags": [
+          "Fichiers"
+        ],
+        "operationId": "getFichierById",
+        "parameters": [
+          {
+            "name": "idFichier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/fichiers/{idFichier}/download": {
+      "get": {
+        "tags": [
+          "Fichiers"
+        ],
+        "operationId": "getFile",
+        "parameters": [
+          {
+            "name": "idFichier",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "format": "byte"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commandes/{numeroCommande}": {
+      "get": {
+        "tags": [
+          "Commandes"
+        ],
+        "operationId": "getCommandesByNumero",
+        "parameters": [
+          {
+            "name": "numeroCommande",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/commandes/utilisateur/{idUtilisateur}": {
+      "get": {
+        "tags": [
+          "Commandes"
+        ],
+        "operationId": "getCommandesByIdUser",
+        "parameters": [
+          {
+            "name": "idUtilisateur",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -675,7 +2025,7 @@
     "/auth/confirm": {
       "get": {
         "tags": [
-          "authentication"
+          "Authentification"
         ],
         "operationId": "confirm",
         "parameters": [
@@ -707,7 +2057,7 @@
         "tags": [
           "address"
         ],
-        "operationId": "findById_1",
+        "operationId": "findById",
         "parameters": [
           {
             "name": "address-id",
@@ -736,7 +2086,7 @@
         "tags": [
           "address"
         ],
-        "operationId": "delete_1",
+        "operationId": "delete_2",
         "parameters": [
           {
             "name": "address-id",
@@ -778,44 +2128,15 @@
         }
       }
     },
-    "/admin/{user-id}": {
-      "get": {
-        "tags": [
-          "admin"
-        ],
-        "operationId": "findById_2",
-        "parameters": [
-          {
-            "name": "user-id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserDto"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/utilisateurs/users/{id}": {
       "delete": {
         "tags": [
-          "admin"
+          "Utilisateurs"
         ],
-        "operationId": "delete_2",
+        "operationId": "deleteUserAndAddresses",
         "parameters": [
           {
-            "name": "user-id",
+            "name": "id",
             "in": "path",
             "required": true,
             "schema": {
@@ -834,61 +2155,54 @@
   },
   "components": {
     "schemas": {
-      "Adresse": {
+      "PasswordDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "rue": {
-            "type": "string"
-          },
-          "complement": {
-            "type": "string"
-          },
-          "codePostal": {
-            "type": "string"
-          },
-          "ville": {
-            "type": "string"
-          },
-          "typeAdresse": {
-            "$ref": "#/components/schemas/TypeAdresse"
-          },
-          "user": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "GrantedAuthority": {
-        "type": "object",
-        "properties": {
-          "authority": {
+          "password": {
             "type": "string"
           }
         }
       },
-      "Role": {
+      "InsertUtilisateurDto": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
+          "nom": {
             "type": "string"
           },
-          "user": {
-            "$ref": "#/components/schemas/User"
+          "prenom": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
           }
         }
       },
-      "TypeAdresse": {
+      "TypeOptionDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "idOption": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idTypeOption": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "libelle": {
+            "type": "string"
+          },
+          "prix": {
+            "type": "number"
+          }
+        }
+      },
+      "StatusDto": {
+        "type": "object",
+        "properties": {
+          "idStatus": {
             "type": "integer",
             "format": "int32"
           },
@@ -897,98 +2211,27 @@
           }
         }
       },
-      "User": {
+      "OptionDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "idOption": {
             "type": "integer",
             "format": "int32"
           },
-          "firstName": {
+          "libelle": {
             "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "role": {
-            "$ref": "#/components/schemas/Role"
-          },
-          "adresse": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Adresse"
-            }
-          },
-          "enabled": {
-            "type": "boolean"
-          },
-          "username": {
-            "type": "string"
-          },
-          "authorities": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/GrantedAuthority"
-            }
-          },
-          "accountNonExpired": {
-            "type": "boolean"
-          },
-          "credentialsNonExpired": {
-            "type": "boolean"
-          },
-          "accountNonLocked": {
-            "type": "boolean"
           }
         }
       },
-      "UserDto": {
-        "required": [
-          "email",
-          "firstName",
-          "lastName",
-          "password"
-        ],
+      "CategorieDto": {
         "type": "object",
         "properties": {
-          "id": {
+          "idCategorie": {
             "type": "integer",
             "format": "int32"
           },
-          "firstName": {
+          "libelle": {
             "type": "string"
-          },
-          "lastName": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "maxLength": 16,
-            "minLength": 8,
-            "type": "string"
-          },
-          "active": {
-            "type": "boolean"
-          },
-          "roles": {
-            "$ref": "#/components/schemas/Role"
-          },
-          "adresse": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Adresse"
-            }
           }
         }
       },
@@ -1014,9 +2257,21 @@
           "typeAdresse": {
             "$ref": "#/components/schemas/TypeAdresse"
           },
-          "userId": {
+          "utilisateurId": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "TypeAdresse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "libelle": {
+            "type": "string"
           }
         }
       },
@@ -1042,19 +2297,39 @@
           }
         }
       },
-      "AuthenticationResponse": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string"
-          }
-        }
-      },
       "ResetPassword": {
         "type": "object",
         "properties": {
           "email": {
             "type": "string"
+          }
+        }
+      },
+      "OptionLigneCommandeDto": {
+        "type": "object",
+        "properties": {
+          "numeroCommande": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroLigneCommande": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "typeOptionDto": {
+            "$ref": "#/components/schemas/TypeOptionDto"
+          }
+        }
+      },
+      "OptionCategorieDto": {
+        "type": "object",
+        "properties": {
+          "idCategorie": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "typeOptionDto": {
+            "$ref": "#/components/schemas/TypeOptionDto"
           }
         }
       },
@@ -1065,6 +2340,108 @@
             "type": "string"
           },
           "email": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          }
+        }
+      },
+      "InsertLigneCommandeDto": {
+        "type": "object",
+        "properties": {
+          "numeroCommande": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rectoVerso": {
+            "type": "boolean"
+          },
+          "couleur": {
+            "type": "boolean"
+          },
+          "nombreExemplaire": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreFeuille": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prixLigneCommande": {
+            "type": "number"
+          },
+          "idFichier": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "InsertIntervenirDto": {
+        "type": "object",
+        "properties": {
+          "numeroCommande": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "numeroLigneCommande": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idUtilisateur": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ResponseMessage": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "InsertCommandeDto": {
+        "type": "object",
+        "properties": {
+          "idUtilisateur": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "idAdresse": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "prix": {
+            "type": "number"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "nom": {
+            "type": "string"
+          },
+          "prenom": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthenticationResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
             "type": "string"
           }
         }
@@ -1079,12 +2456,75 @@
             "type": "string"
           }
         }
+      },
+      "Adresse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rue": {
+            "type": "string"
+          },
+          "complement": {
+            "type": "string"
+          },
+          "codePostal": {
+            "type": "string"
+          },
+          "ville": {
+            "type": "string"
+          },
+          "typeAdresse": {
+            "$ref": "#/components/schemas/TypeAdresse"
+          },
+          "idUtilisateur": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UtilisateurDto": {
+        "type": "object",
+        "properties": {
+          "idUtilisateur": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nom": {
+            "type": "string"
+          },
+          "prenom": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "adresse": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Adresse"
+            }
+          }
+        }
       }
     },
     "securitySchemes": {
       "bearerAuth": {
         "type": "http",
-        "name": "bearerAuth",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }

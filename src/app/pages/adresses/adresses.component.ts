@@ -1,27 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {AdresseDto} from "../../swagger/services/models/adresse-dto";
-import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Router} from "@angular/router";
-import {HelperService} from "../../services/helper/helper.service";
-import {AddressService} from "../../swagger/services/services/address.service";
-import {UserDto} from "../../swagger/services/models/user-dto";
-import {User} from "../../swagger/services/models/user";
-import {UserService} from "../../swagger/services/services/user.service";
-import {forkJoin} from "rxjs";
-import {TypeAdresse} from "../../swagger/services/models/type-adresse";
+import { Component, OnInit } from '@angular/core';
+import { AdresseDto } from '../../swagger/services/models/adresse-dto';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HelperService } from '../../services/helper/helper.service';
 
+import { TypeAdresse } from '../../swagger/services/models/type-adresse';
+import { UtilisateurDto } from '../../swagger/services/models/utilisateur-dto';
+import { UtilisateursService } from '../../swagger/services/services/utilisateurs.service';
+import {map} from "rxjs/operators";
+import {AddressService} from "../../swagger/services/services/address.service";
+import {forkJoin} from "rxjs";
+import {Adresse} from "../../swagger/services/models/adresse";
 
 @Component({
   selector: 'app-adresses',
   templateUrl: './adresses.component.html',
   styleUrls: ['./adresses.component.css']
 })
-export class AdressesComponent implements OnInit{
-
-  userDto: UserDto = {password: '', email: '', firstName: '', lastName: ''};
-  user: User = {email: '', firstName: '', lastName: ''};
-
-  users: Array<UserDto> = [];
+export class AdressesComponent implements OnInit {
+// declaration
+  userDto: UtilisateurDto = {email: '', nom: '', prenom: '', telephone:''};
+  users: UtilisateurDto[] = [];
+  user: Array<UtilisateurDto> = [];
   adresse: Array<AdresseDto> = [];
   typesAdresse: Array<TypeAdresse> = []; // étape 1
   url: string | null = '';
@@ -33,55 +33,42 @@ export class AdressesComponent implements OnInit{
     private adresseService: AddressService,
     private router: Router,
     private route: ActivatedRoute,
-    private userService: UserService,
+    private userService: UtilisateursService,
     private helperService: HelperService
-  ) { }
-
+  ) {
+  }
 
   ngOnInit(): void {
-    this.errorMessage ='';
+    this.errorMessage = '';
+    this.getAllTypeAdresse();
     this.findById();
-    this.getAllTypeAdresse(); // étape 2
-    // console.log(this.helperService.userId);
   }
 
   private findById() {
-    forkJoin([
-      this.userService.findById({"user-id": this.helperService.userId}),
-      this.adresseService.findAll1() // étape 2
-    ]).subscribe({
-      next: ([userData, typesAdresseData]) => {
-        this.userDto = userData;
-        this.adresse = userData.adresse ?? [];
-        this.typesAdresse = typesAdresseData; // étape 2
+    this.adresseService.findAll1(this.helperService.userId).subscribe({
+      next: (adresses) => {
+        this.adresse = adresses.filter((adresse) => adresse.utilisateurId === this.helperService.userId);
       },
       error: (err) => {
         console.error(err);
-        // handle the error scenario here
+        // gérer le cas d'erreur ici
       }
     });
   }
 
-  editAdresse(adresseId: number, typeAdresseId: number) { // étape 3
-    let apiUrl = this.router.navigate(['user/update-adresse', adresseId], { state: { typeAdresseId: typeAdresseId }});
-    console.log(adresseId);
-  }
 
-  confirmDelete(adresseId: number) {
-    if (confirm('Voulez-vous vraiment supprimer cette adresse ?')) {
-      this.deleteAdresse(adresseId);
-    } else {
-      this.router.navigate(['user/adresses']); // Redirection vers la page des adresses de l'utilisateur
-    }
-  }
+
+
+
+
 
   deleteAdresse(adresseId: number) {
-    if(confirm("Voulez-vous vraiment supprimer cette adresse ?")) {
-      this.adresseService.delete1({'address-id': adresseId}).subscribe({
+    if (confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?")) {
+      this.adresseService.delete2({ 'address-id': adresseId }).subscribe({
         next: () => {
-          this.successMsg = 'Adresse supprimée avec succès';
-          // Rechargez la liste des adresses ici, si nécessaire
-          this.router.navigate(['user/adresses']);
+          alert("Adresse supprimée avec succès");
+          // Remove the deleted address from the list of addresses shown in the UI
+          this.adresse = this.adresse.filter(a => a.id !== adresseId);
         },
         error: (err) => {
           console.error(err);
@@ -101,5 +88,11 @@ export class AdressesComponent implements OnInit{
       }
     });
   }
+
+
+  async back() {
+    window.history.back();
+  }
+
 
 }

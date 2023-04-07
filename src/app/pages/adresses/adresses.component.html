@@ -1,46 +1,39 @@
-<style>
-  .list-group-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
+<button class="btn btn-sm btn-outline-secondary position-absolute top-2 start-0 mt-3 ms-3" (click)="back()" style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);">
+  Page précédente
+</button>
+<div class="container" style="margin-top: 5%; justify-content: center">
+  <div class="card mb-3 cardadresse">
+    <div class="card-body">
+      <h1>Mes adresses</h1>
+      <hr>
+      Choisissez vos adresses de facturation et de livraison. Ces dernières seront présélectionnées lors de vos commandes. Vous pouvez également ajouter d'autres adresses, ce qui est particulièrement intéressant pour envoyer des cadeaux ou recevoir votre commande au bureau.
+      <br>
+      Vos adresses sont listées ci-dessous.
+      <br>
+      Pensez à les tenir à jour si ces dernières venaient à changer.
+    </div>
+  </div>
 
-  .list-group-item .list-group-item-content {
-    flex: 1;
-    margin-right: 10px;
-  }
+  <div class="row card2">
+    <div class="col-md-4" *ngFor="let ad of adresse">
+      <div class="card mb-3 shadow">
+        <div class="card-body">
+          <h5 class="card-title">{{ ad.typeAdresse?.libelle }}</h5>
+          <p class="card-text">{{ ad.rue }} {{ ad.complement }}</p>
+          <p class="card-text">{{ ad.codePostal }} {{ ad.ville }}</p>
+          <div class="d-flex justify-content-end">
+            <button class="btn btn-sm btn-danger" (click)="ad.id !== undefined ? deleteAdresse(ad.id) : null"><i
+              class="fa fa-trash"></i></button>
+            <button class="btn btn-sm btn-info ms-2" [routerLink]="['/user/update-adresse', ad.id]"><i
+              class="fa fa-edit"></i></button>
 
-  .list-group-item .btn-danger {
-    margin-left: auto;
-  }
-</style>
-
-<div class="container">
-  <h1>Mes adresses</h1>
-
-  <div class="row">
-    <div class="col-md-4">
-      <div class="list-group">
-        <div class="list-group">
-          <a *ngFor="let ad of adresse" [routerLink]="['/user/update-adresse', ad.id]" class="list-group-item">
-            <div class="list-group-item-content">
-              <h4 class="list-group-item-heading">{{ ad.typeAdresse?.libelle }}</h4>
-              <p class="list-group-item-text">{{ ad.complement }}</p>
-              <p class="list-group-item-text">{{ ad.rue }}</p>
-              <p class="list-group-item-text">{{ ad.codePostal }} {{ ad.ville }}</p>
-            </div>
-            <button class="btn btn-sm btn-danger" (click)="ad.id !== undefined ? confirmDelete(ad.id) : null"><i class="fa fa-trash"></i></button>
-          </a>
-
+          </div>
         </div>
-
-      </div>
-      <div class="text-center">
-        <button [routerLink]="['/user/add-adresse']" class="btn btn-primary">Ajouter une adresse</button>
       </div>
     </div>
+  </div>
 
+  <div class="mt-2 btnajout">
+    <button [routerLink]="['/user/add-adresse']" class="btn btn-success" style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);">Ajouter une nouvelle adresse</button>
   </div>
 </div>

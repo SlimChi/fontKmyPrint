@@ -6,12 +6,12 @@ import {
   HttpInterceptor, HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AuthenticationService} from "../../swagger/services/services/authentication.service";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-  constructor(private authservice : AuthenticationService) {}
+  constructor(private authservice : UtilisateursService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 

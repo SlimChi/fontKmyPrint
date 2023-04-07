@@ -7,6 +7,6 @@ export interface AdresseDto {
   id?: number;
   rue?: string;
   typeAdresse?: TypeAdresse;
-  userId?: number;
+  utilisateurId?: number;
   ville?: string;
 }

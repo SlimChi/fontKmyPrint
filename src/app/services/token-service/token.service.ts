@@ -1,12 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
+import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+import {CookieService} from "ngx-cookie-service";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenService {
-  constructor(private router: Router) {
+  private cookieName = 'myAppToken';
+
+  constructor(private router: Router,
+              private cookieService: CookieService,
+              private userService: UtilisateursService,) {
   }
   private jwtHelper = new JwtHelperService();
   savetoken(token: string): void {
@@ -28,5 +35,27 @@ export class TokenService {
   public setToken(token: string): void {
     localStorage.setItem('token', token);
   }
+  savetokenInCookie(token: string): void {
+    document.cookie = `token=${token}`;
+  }
+  loadTokenFromCookie(): string {
+    return this.cookieService.get(this.cookieName);
+  }
 
+  getToken(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  getUserInfo(): void {
+    const token = this.getToken();
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    const userId = decodedToken.sub;
+
+    this.userService.getUtilisateurById(userId).subscribe(
+      (user) => {
+        // Store user info in a service or component
+      },
+      (error) => console.log(error)
+    );
+  }
 }
