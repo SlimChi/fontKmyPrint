@@ -36,7 +36,7 @@ const routes: Routes = [
     children: [
 
       {path: 'adminDashboard', component: AdminDashboardComponent},
-      {path: 'listUser', component: ManageUsersComponent},
+      {path: 'users', component: ManageUsersComponent},
       {path: 'profile', component: ProfileComponent},
       {
         path: '', redirectTo: 'dashboard',

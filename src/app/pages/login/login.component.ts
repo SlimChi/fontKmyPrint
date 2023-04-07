@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
         const helper = new JwtHelperService();
         const decodedToken = helper.decodeToken(<string>data.token);
         console.log(decodedToken)
-        if (decodedToken.authorities[0].authority === 'ROLE_ADMIN') {
+        if (decodedToken.authorities[0].authority === 'ADMIN') {
           await this.router.navigate(['admin/users']);
         } else {
           await this.router.navigate(['user/profile']);

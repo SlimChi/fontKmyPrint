@@ -6,6 +6,7 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./moncompte.component.css']
 })
 export class MoncompteComponent implements OnInit{
+  userRole: boolean = false;
   async back() {
     window.history.back();
   }
