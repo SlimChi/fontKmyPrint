@@ -15,6 +15,9 @@ export class ResetPasswordComponent implements OnInit {
   token?: string;
   tokenUrl = '';
   successMsg = '';
+  confirmPassword = '';
+  showPassword = false;
+
 
   ngOnInit(): void {
     this.tokenUrl = this.route.snapshot.queryParams['token'];
@@ -28,6 +31,10 @@ export class ResetPasswordComponent implements OnInit {
 
 
   resetPassword() {
+    if (this.newPassword.password !== this.confirmPassword) {
+      this.errorMessages.push("Les deux mots de passe ne sont pas identique !!");
+      return;
+    }
     this.auth.resetPassword({
       token: this.tokenUrl,
       body: this.newPassword
@@ -42,5 +49,9 @@ export class ResetPasswordComponent implements OnInit {
         this.errorMessages = err.error.validationErrors;
       }
     });
+  }
+
+  toggleShowPasswordNewPassword() {
+    this.showPassword = !this.showPassword;
   }
 }

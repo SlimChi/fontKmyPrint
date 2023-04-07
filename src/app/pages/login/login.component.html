@@ -15,7 +15,7 @@
                [(ngModel)]="authRequest.password" name="password" required>
         <div class="input-group-append">
     <span class="input-group-text">
-      <i class="fa" (click)="toggleShowPassword()" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+      <i class="fa" (click)="toggleShowPasswordLogin()" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
     </span>
         </div>
       </div>
@@ -25,8 +25,8 @@
         <label class="form-check-label" for="rememberMe">Se souvenir de moi</label>
       </div>
       <div class="d-flex justify-content-center mb-3">
-        <button (click)="login()" type="button" class="btn btn-primary" style="background-color: #ACC3FF; border-color: #ACC3FF; color: black">
-         Connecter
+        <button (click)="login()" type="button" class="btn btn-primary" style="background-color: #4CAF50; border-color: #4CAF50;">
+          <em>&nbsp;Connecter</em>
         </button>
       </div>
       <p class="btn-link text-center" style="cursor: pointer" routerLink="/forgot-password">Mot de passe oublié ?</p>
@@ -43,31 +43,35 @@
         <p *ngFor="let msg of errorMessages">{{msg}}</p>
       </div>
       <div class="form-group">
-        <label for="firstname" class="form-label">Nom</label>
-        <input [(ngModel)]="userDto.nom" type="text" class="form-control" id="firstname" placeholder="joe">
+        <label for="nom" class="form-label">nom</label>
+        <input [(ngModel)]="userDto.nom" type="text" class="form-control" id="nom" placeholder="joe">
       </div>
       <div class="form-group">
-        <label for="lastname" class="form-label">Prénom</label>
-        <input [(ngModel)]="userDto.prenom" type="text" class="form-control" id="lastname" placeholder="doe">
+        <label for="prenom" class="form-label">Prénom</label>
+        <input [(ngModel)]="userDto.prenom" type="text" class="form-control" id="prenom" placeholder="doe">
       </div>
       <div class="form-group">
         <label for="register" class="form-label">Adresse mail</label>
         <input [(ngModel)]="userDto.email" type="text" class="form-control" id="register" placeholder="name@example.com">
       </div>
       <div class="form-group">
+        <label for="tel" class="form-label">Télephone</label>
+        <input [(ngModel)]="userDto.telephone" type="tel" class="form-control" id="tel" placeholder="name@example.com">
+      </div>
+      <div class="form-group">
         <label for="motdepasseRegister" class="form-label">Mot de passe</label>
         <div class="input-group">
           <input [(ngModel)]="userDto.password" class="form-control" id="motdepasseRegister" placeholder="mot de passe" [type]="showPassword ? 'password' : 'text'">
           <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
-              <span class="fa" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></span>
-            </button>
+           <span class="input-group-text">
+      <i class="fa" (click)="toggleShowPasswordRegister()" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="d-flex justify-content-center mb-3 ">
-        <button (click)="register()" type="button" class="btn btn-primary" style="background-color: #ACC3FF; border-color: #ACC3FF; color: black">
+      <div class="d-flex justify-content-end mb-3 ">
+        <button (click)="register()" type="button" class="btn btn-primary">
           Confirmer
         </button>
       </div>

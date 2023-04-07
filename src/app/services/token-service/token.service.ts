@@ -58,4 +58,9 @@ export class TokenService {
       (error) => console.log(error)
     );
   }
+
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['login'])
+  }
 }

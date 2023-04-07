@@ -8,6 +8,7 @@ import {UtilisateursService} from "../../swagger/services/services/utilisateurs.
 import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
 import {RegisterRequest} from "../../swagger/services/models/register-request";
 import {TypeAdresse} from "../../swagger/services/models/type-adresse";
+import {TokenService} from "../../services/token-service/token.service";
 
 
 
@@ -32,13 +33,13 @@ export class ProfileComponent implements OnInit {
     private userService: UtilisateursService,
     private router: Router,
     public helperService: HelperService,
+    public tokenService: TokenService,
 
   ) { }
 
 
   ngOnInit(): void {
-    this.errorMessage =[];
-    this.findById();
+
     console.log(this.helperService.userId);
     console.log(this.findById());
   }
@@ -94,8 +95,24 @@ export class ProfileComponent implements OnInit {
     await this.router.navigate(['home']);
   }
 
-  onDeleteUser() {
+  onDeleteUserAndAddresses() {
+    this.errorMessage =[];
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
+    if (confirmation) {
+      this.userService.deleteUserAndAddresses({
+        id: this.helperService.userId,
+      }).subscribe(
+        () => {
+          alert('Votre compte a été supprimé avec succès.');
+          this.tokenService.clearToken()
+          console.log('User and addresses deleted successfully');
 
+        },
+        (error) => {
+          console.error('Error deleting user and addresses', error);
+        }
+      );
+    }
   }
 
   async back() {

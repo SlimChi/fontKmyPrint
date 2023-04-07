@@ -33,7 +33,9 @@ export class NavbarComponent implements OnInit, DoCheck{
     if (token) {
       const decodedToken = helper.decodeToken(token);
       this.userRole = decodedToken.authorities[0].authority === 'USER';
+      console.log(this.userRole)
       this.adminRole = decodedToken.authorities[0].authority === 'ADMIN';
+      console.log(this.adminRole)
     }
     this.tokenService.getToken();
   }

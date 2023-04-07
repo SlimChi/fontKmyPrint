@@ -13,7 +13,8 @@ import {UtilisateursService} from "../../swagger/services/services/utilisateurs.
 export class ForgotPasswordComponent implements OnInit{
   resetPasssword: ResetPassword={email:''};
   errorMessages: Array<string> = [];
-  errorMessage: string | null = null;
+  errorMessage: Array<string> = [];
+
   constructor(
     private router: Router,
     private userService: UtilisateursService,
@@ -27,10 +28,7 @@ export class ForgotPasswordComponent implements OnInit{
   }
 
   forgotPassword() {
-    if (!this.resetPasssword.email) {
-      this.errorMessage = 'Veuillez entrer votre émail et vous recevrez un lien de réinitialisation du mot de passe';
-      return;
-    }
+    this.errorMessages = [];
 
     this.userService.resetPasswordEmail({
       body: this.resetPasssword
@@ -41,11 +39,14 @@ export class ForgotPasswordComponent implements OnInit{
       },
       error: (err: { error: { validationErrors: string[]; }; }) => {
         console.log(err);
+        alert('Une erreur est survenue. Veuillez vérifier vos informations');
         this.errorMessages = err.error.validationErrors;
-   ;
       }
     });
+
   }
+
+
   async cancel() {
     await this.router.navigate(['user/adresses']);
   }
