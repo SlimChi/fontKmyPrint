@@ -50,7 +50,7 @@
 
         <!-- Shopping cart icon -->
         <li class="nav-item me-3">
-          <a class="nav-link" style="color: white" [routerLink]="'user/panier'">
+          <a class="nav-link" style="color: white" [routerLink]="'user/panier'" *ngIf="userRole && isAuthenticated()">
             <em class="fas fa-shopping-cart"></em>
           </a>
         </li>

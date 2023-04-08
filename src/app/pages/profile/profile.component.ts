@@ -52,7 +52,6 @@ export class ProfileComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          // handle the error scenario here
         }
       });
 
@@ -65,7 +64,6 @@ export class ProfileComponent implements OnInit {
       this.errorMessage2 = 'Veuillez remplir tous les champs obligatoires.';
       return;
     }
-
     // Assign the properties of this.userDto to this.user
     this.userService.updateUser({
       id: this.helperService.userId,
@@ -92,7 +90,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async cancel() {
-    await this.router.navigate(['home']);
+    this.editMode = false;
   }
 
   onDeleteUserAndAddresses() {
@@ -116,7 +114,7 @@ export class ProfileComponent implements OnInit {
   }
 
   async back() {
-    await this.router.navigate(['user/home']);
+    window.history.back();
     this.editMode = false;
   }
 

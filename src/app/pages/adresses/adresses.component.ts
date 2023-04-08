@@ -56,12 +56,6 @@ export class AdressesComponent implements OnInit {
     });
   }
 
-
-
-
-
-
-
   deleteAdresse(adresseId: number) {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?")) {
       this.adresseService.delete2({ 'address-id': adresseId }).subscribe({

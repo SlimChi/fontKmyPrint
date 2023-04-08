@@ -27,18 +27,28 @@ export class NavbarComponent implements OnInit, DoCheck{
   ) {   }
 
   ngOnInit(): void {
-    this.loggedInUserName= this.helperService.userFullname;
-    const helper = new JwtHelperService();
     const token = localStorage.getItem('token');
     if (token) {
-      const decodedToken = helper.decodeToken(token);
+      const decodedToken = new JwtHelperService().decodeToken(token);
       this.userRole = decodedToken.authorities[0].authority === 'USER';
-      console.log(this.userRole)
       this.adminRole = decodedToken.authorities[0].authority === 'ADMIN';
-      console.log(this.adminRole)
+      this.loggedInUserName = this.getLoggedInUserName(decodedToken);
     }
     this.tokenService.getToken();
   }
+
+  private getLoggedInUserName(decodedToken: any): string {
+    const authority = decodedToken.authorities[0].authority;
+    switch (authority) {
+      case 'USER':
+        return 'Utilisateur';
+      case 'ADMIN':
+        return 'Administrateur';
+      default:
+        return '';
+    }
+  }
+
 
   logout(): void {
     this.tokenService.clearToken();

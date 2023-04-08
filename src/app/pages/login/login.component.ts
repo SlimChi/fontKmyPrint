@@ -63,7 +63,8 @@ export class LoginComponent implements OnInit {
         const decodedToken = helper.decodeToken(<string>data.token);
         console.log(decodedToken)
         if (decodedToken.authorities[0].authority === 'ADMIN') {
-          await this.router.navigate(['admin/users']);
+               await this.router.navigate(['admin/users']);
+          window.location.reload();
         } else {
           await this.router.navigate(['user/profile']);
           window.location.reload();

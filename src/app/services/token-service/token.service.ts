@@ -16,6 +16,7 @@ export class TokenService {
               private userService: UtilisateursService,) {
   }
   private jwtHelper = new JwtHelperService();
+
   savetoken(token: string): void {
     localStorage.setItem('token', token)
     this.router.navigate(['admin','user'])
@@ -23,7 +24,7 @@ export class TokenService {
 
   public isLogged(): boolean {
     const token = localStorage.getItem('token')
-    console.log(token)
+    // console.log(token)
     return !!token
   }
 

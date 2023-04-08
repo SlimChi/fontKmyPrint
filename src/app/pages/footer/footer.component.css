@@ -46,5 +46,5 @@
   flex: 1 0 auto;
 }
 .content {
-  margin-bottom: 80px; /* hauteur du footer */
+  margin-bottom:0; /* hauteur du footer */
 }
