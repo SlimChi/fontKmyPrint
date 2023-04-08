@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient, HttpEventType} from "@angular/common/http";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FichiersService} from "../../swagger/services/services/fichiers.service";
 
 @Component({
   selector: 'app-commande',
@@ -13,7 +14,10 @@ export class CommandeComponent {
   progress = 0;
   uploading = false;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(private formBuilder: FormBuilder,
+              private http: HttpClient,
+              private fichierService : FichiersService
+  ) {
     this.uploadForm = this.formBuilder.group({
       pdfFile: ['', Validators.required]
     });
