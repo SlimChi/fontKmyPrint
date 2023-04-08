@@ -39,25 +39,32 @@
         <div class="">
           <div class="p-3" *ngIf="selectedUser">
             <h2>Détails</h2>
-            <div class="card custom-card mb-3 shadow">
+            <div class="card custom-card mb-3 shadow" *ngIf="selectedUser">
               <div class="card-body">
                 <p><strong>Nom:</strong> {{ selectedUser.nom }}</p>
                 <p><strong>Prénom:</strong> {{ selectedUser.prenom }}</p>
                 <p><strong>Email:</strong> {{ selectedUser.email }}</p>
                 <p><strong>Téléphone:</strong> {{ selectedUser.telephone }}</p>
                 <h4>Adresses</h4>
-                <ul>
-                  <li *ngFor="let addr of adresse">
-                    {{ addr.rue }}, {{ addr.complement }}, {{ addr.ville }}, {{ addr.codePostal }}, Votre {{ addr.typeAdresse?.libelle }}
+                <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let addr of selectedUser.adresse">
+                    <div class="address">
+                      <span>{{ addr.rue }}, {{ addr.complement }}, {{ addr.ville }}, {{ addr.codePostal }}</span>
+                      <div class="address-type" *ngIf="addr.typeAdresse">
+                        {{ addr.typeAdresse.libelle }}
+                      </div>
+                    </div>
                   </li>
-
                 </ul>
-
               </div>
             </div>
           </div>
 
-      </div>
+
+        </div>
     </div>
   </div>
 </div>
+<style>
+
+</style>
