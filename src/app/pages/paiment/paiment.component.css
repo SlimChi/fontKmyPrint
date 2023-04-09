@@ -24,3 +24,7 @@
 .card2{
   width: 400px;
 }
+.number {
+  selector: '#card-number';
+  placeholder: '1234 5678 9012 3456'
+}

@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit, DoCheck{
 
   ngDoCheck(): void {
     let url = this.router.url;
-    if (url == '/login' || url == '/register' || url == '/home') {
+    if (url == '/login' || url == '/register' || url == '/home'|| url == '/commande') {
       this.isLogout = false;
     } else {
       this.isLogout = true;

@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
+  userRole: boolean = false;
+  adminRole: boolean = false;
   year: number = new Date().getFullYear();
 }

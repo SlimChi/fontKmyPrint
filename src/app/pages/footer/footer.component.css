@@ -48,3 +48,17 @@
 .content {
   margin-bottom:0; /* hauteur du footer */
 }
+html, body {
+  height: 100%;
+}
+
+.container-page {
+  min-height: 100%;
+  position: relative;
+}
+
+.footer {
+
+  bottom: 0;
+  width: 100%;
+}

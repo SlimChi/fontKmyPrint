@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {JwtHelperService} from "@auth0/angular-jwt";
 import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
 import {CookieService} from "ngx-cookie-service";
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
@@ -10,10 +11,12 @@ import {CookieService} from "ngx-cookie-service";
 })
 export class TokenService {
   private cookieName = 'myAppToken';
+  private tokenUrl = 'https://api.braintreegateway.com/merchants/3fw8jj3xr2wj6cxz/token';
 
   constructor(private router: Router,
               private cookieService: CookieService,
-              private userService: UtilisateursService,) {
+              private userService: UtilisateursService,
+              private http: HttpClient) {
   }
   private jwtHelper = new JwtHelperService();
 
@@ -63,5 +66,16 @@ export class TokenService {
   logout() {
     localStorage.removeItem('token');
     this.router.navigate(['login'])
+  }
+
+  sendPaymentNonce(nonce: string): Promise<any> {
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    const options = { headers: headers };
+    const body = {
+      paymentMethodNonce: nonce
+    };
+    return this.http.post(this.tokenUrl, body, options).toPromise();
   }
 }

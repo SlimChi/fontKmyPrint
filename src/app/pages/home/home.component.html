@@ -6,7 +6,7 @@
           <h5>Rapport de stage</h5>
         </div>
         <div class="card-body p-0">
-          <a href="/commande">
+          <a [routerLink]="!isLogout ? '/commande' : '/user/commande'">
             <img class="card-img-top" src="/assets/images/rapportdestage1.png" alt="Card image cap">
           </a>
         </div>
