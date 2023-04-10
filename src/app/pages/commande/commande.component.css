@@ -1,8 +1,7 @@
 .card{
-  width: 450px;
-  height: 400px;
+
   margin-top: 10%;
-  margin-left: 15%;
+  margin-left: 5%;
 
 }
 .d-inline-flex{
@@ -34,8 +33,9 @@
   line-height: 1.5;
 }
 
-.form-control {
-  height: 38px;
-  text-align: center;
-  font-weight: bold;
+
+.btn-commande {
+  position: absolute;
+  margin-top: 20px;
+  right: 0;
 }

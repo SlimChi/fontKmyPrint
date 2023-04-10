@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ResetPassword} from "../../swagger/services/models/reset-password";
 import {Router} from "@angular/router";
 import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -18,6 +19,7 @@ export class ForgotPasswordComponent implements OnInit{
   constructor(
     private router: Router,
     private userService: UtilisateursService,
+    private snackBar: MatSnackBar
 
   ) {
 
@@ -35,16 +37,21 @@ export class ForgotPasswordComponent implements OnInit{
     }).subscribe({
       next: async (data) => {
         await this.router.navigate(['response-password']);
-
+        this.snackBar.open('Un email a été envoyé pour réinitialiser votre mot de passe', 'Fermer', {
+          duration: 5000, // Durée de 5 secondes avant fermeture automatique
+        });
       },
       error: (err: { error: { validationErrors: string[]; }; }) => {
         console.log(err);
-        alert('Une erreur est survenue. Veuillez vérifier vos informations');
         this.errorMessages = err.error.validationErrors;
+        this.snackBar.open('Une erreur est survenue. Veuillez vérifier vos informations', 'Fermer', {
+          duration: 5000, // Durée de 5 secondes avant fermeture automatique
+        });
       }
     });
-
   }
+
+
 
 
   async cancel() {

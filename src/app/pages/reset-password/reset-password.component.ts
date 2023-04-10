@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 
 import {NewPassword} from "../../swagger/services/models/new-password";
 import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+import {ToastrService} from "ngx-toastr";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-reset-password',
@@ -26,13 +28,15 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(private auth: UtilisateursService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private snackBar: MatSnackBar) {
   }
+
 
 
   resetPassword() {
     if (this.newPassword.password !== this.confirmPassword) {
-      this.errorMessages.push("Les deux mots de passe ne sont pas identique !!");
+      this.errorMessages.push("Les deux mots de passe ne sont pas identiques !");
       return;
     }
     this.auth.resetPassword({
@@ -41,15 +45,20 @@ export class ResetPasswordComponent implements OnInit {
     }).subscribe({
       next: async (data) => {
         this.successMsg = 'Votre mot de passe a été mis à jour';
+        const snackBarRef = this.snackBar.open('Mot de passe mis à jour', 'Fermer', { duration: 5000 });
+        setTimeout(() => {
+          snackBarRef.dismiss();
+        }, 4000);
         await this.router.navigate(['login']);
-     ;
       },
       error: (err: { error: { validationErrors: string[]; }; }) => {
         console.log(err);
         this.errorMessages = err.error.validationErrors;
+        this.snackBar.open('Une erreur est survenue', 'Fermer');
       }
     });
   }
+
 
   toggleShowPasswordNewPassword() {
     this.showPassword = !this.showPassword;

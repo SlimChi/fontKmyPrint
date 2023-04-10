@@ -7,6 +7,7 @@ import {UtilisateursService} from "../../swagger/services/services/utilisateurs.
 import {AddressService} from "../../swagger/services/services/address.service";
 import {forkJoin} from "rxjs";
 import {TypeAdresse} from "../../swagger/services/models/type-adresse";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -35,7 +36,8 @@ export class AddAdresseComponent implements OnInit{
     private router: Router,
     private route: ActivatedRoute,
     private userService: UtilisateursService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private snackBar: MatSnackBar
 
   ) { }
 
@@ -77,12 +79,16 @@ export class AddAdresseComponent implements OnInit{
       }).subscribe({
         next: () => {
           this.router.navigate(['user/adresses']);
-          alert('Votre adresse a été ajoutée avec succès !');
+          this.snackBar.open('Votre adresse a été ajoutée avec succès !', 'Fermer', {
+            duration: 3000
+          });
         },
         error: (err) => {
           console.error(err);
           this.errorMessage = "Impossible d'ajouter votre adresse";
-          alert("Impossible d'ajouter votre adresse.");
+          this.snackBar.open("Impossible d'ajouter votre adresse.", 'Fermer', {
+            duration: 3000
+          });
         }
       });
     }

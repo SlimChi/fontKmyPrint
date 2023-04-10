@@ -11,6 +11,7 @@ import {map} from "rxjs/operators";
 import {AddressService} from "../../swagger/services/services/address.service";
 import {forkJoin} from "rxjs";
 import {Adresse} from "../../swagger/services/models/adresse";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-adresses',
@@ -19,14 +20,13 @@ import {Adresse} from "../../swagger/services/models/adresse";
 })
 export class AdressesComponent implements OnInit {
 // declaration
-  userDto: UtilisateurDto = {email: '', nom: '', prenom: '', telephone:''};
   users: UtilisateurDto[] = [];
   user: Array<UtilisateurDto> = [];
   adresse: Array<AdresseDto> = [];
   typesAdresse: Array<TypeAdresse> = []; // étape 1
   url: string | null = '';
   errorMessage: string | undefined;
-  successMsg = '';
+
 
   constructor(
     private http: HttpClient,
@@ -34,7 +34,8 @@ export class AdressesComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UtilisateursService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private snackBar: MatSnackBar
   ) {
   }
 
@@ -60,7 +61,9 @@ export class AdressesComponent implements OnInit {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette adresse ?")) {
       this.adresseService.delete2({ 'address-id': adresseId }).subscribe({
         next: () => {
-          alert("Adresse supprimée avec succès");
+          this.snackBar.open('Adresse supprimée avec succès', 'Fermer', {
+            duration: 3000
+          });
           // Remove the deleted address from the list of addresses shown in the UI
           this.adresse = this.adresse.filter(a => a.id !== adresseId);
         },

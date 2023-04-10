@@ -10,6 +10,7 @@ import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
 import {RegisterRequest} from "../../swagger/services/models/register-request";
 import {AuthentificationService} from "../../swagger/services/services/authentification.service";
 import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
@@ -32,7 +33,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthentificationService,
     private userService: UtilisateursService,
     private helperService: HelperService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private snackBar: MatSnackBar
   ) {
 
   }
@@ -86,15 +88,16 @@ export class LoginComponent implements OnInit {
     }).subscribe({
       next: async (data) => {
         await this.router.navigate(['confirm-register']);
-        alert('Enregistrement réussi !');
+        this.snackBar.open('Enregistrement réussi !', 'Fermer', { duration: 4000 });
       },
       error: (err) => {
         console.log(err);
         this.errorMessages = err.error.validationErrors;
-        alert('Échec de l\'enregistrement.');
+        this.snackBar.open('Échec de l\'enregistrement.', 'Fermer', { duration: 4000 });
       }
     });
   }
+
 
   toggleShowPasswordLogin() {
     this.showPassword = !this.showPassword;

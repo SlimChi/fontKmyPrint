@@ -3,6 +3,7 @@ import {AdresseDto} from "../../swagger/services/models/adresse-dto";
 import {ActivatedRoute, Router} from "@angular/router";
 
 import {AddressService} from "../../swagger/services/services/address.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-update-adresse',
@@ -22,6 +23,7 @@ export class UpdateAdresseComponent implements OnInit{
     private adresseService: AddressService,
     private router: Router,
     private route: ActivatedRoute,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -50,22 +52,19 @@ export class UpdateAdresseComponent implements OnInit{
     if (this.adresse.id) {
       this.adresseService.save({
         body: this.adresse
-
-      })
-        .subscribe({
-          next: () => {
-
-            this.router.navigate(['user/adresses']);
-
-          },
-          error: (err: any) => {
-            console.error(err);
-            this.errorMessage = 'Error updating address';
-          }
-        });
+      }).subscribe({
+        next: () => {
+          this.router.navigate(['user/adresses']);
+          this.snackBar.open('Adresse mise à jour avec succès', 'Fermer', { duration: 3000 });
+        },
+        error: (err: any) => {
+          console.error(err);
+          this.errorMessage = 'Erreur lors de la mise à jour de l\'adresse';
+          this.snackBar.open('Impossible de mettre à jour votre adresse', 'Fermer', { duration: 3000 });
+        }
+      });
     }
   }
-
 
   async cancel() {
     await this.router.navigate(['user/adresses']);

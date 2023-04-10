@@ -1,12 +1,13 @@
-  <button class="btn btn-sm btn-outline-secondary position-absolute top-2 start-0 mt-3 ms-3" (click)="back()" style="box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);">
-    Page précédente
-  </button>
+
   <div class="text-center">
   <div class="justify-content-center">
   <div class="d-inline-flex">
     <div class="card w-100" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
       <div class="card-header">
-        <small class="form-text text-muted">Faites glisser le fichier depuis votre appareil ou Téléchargez le fichier à partir d'ici</small>
+        <small class="form-text text-muted">
+          La taille du fichier ne doit pas dépasse la limite autorisée 10Mo.
+        </small>
+
       </div>
       <div class="card-body">
 
@@ -83,14 +84,15 @@
 
               </div>
               <div class="file-name custom-width" style="font-size: 0.8em;">
-                <i class="far fa-file"></i> {{ fileName }}
+                <i class="far fa-file" *ngIf="selectedFile"></i> {{ fileName }}
+                <button class="btn btn-sm btn-danger" *ngIf="selectedFile" (click)="deleteUploadedFile()"><i class="fa fa-trash"></i></button>
+                <div class="btncommande mt-3">
+                  <button type="button" class="btn btn-outline-success btn-block btn-commande" (click)="uploadFile()" [disabled]="uploading || !selectedFile">Commander</button>
+                </div>
               </div>
             </div>
           </div>
         </form>
-        <div class="btncommande mt-3">
-          <button type="button" class="btn btn-success btn-lg" (click)="uploadFile()" [disabled]="uploading">Commander</button>
-        </div>
       </div>
 
     </div>

@@ -9,6 +9,7 @@ import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
 import {RegisterRequest} from "../../swagger/services/models/register-request";
 import {TypeAdresse} from "../../swagger/services/models/type-adresse";
 import {TokenService} from "../../services/token-service/token.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 
@@ -34,6 +35,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     public helperService: HelperService,
     public tokenService: TokenService,
+    private snackBar: MatSnackBar
 
   ) { }
 
@@ -75,13 +77,14 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.successMsg = 'Votre profil a été mis à jour';
         this.editMode = false;
+        this.snackBar.open('Votre profil a été mis à jour', 'Fermer');
       },
       error: (err) => {
         console.error(err);
         this.errorMessage = err.error.errorMessage || 'Une erreur s\'est produite lors de la mise à jour de votre profil';
+        this.snackBar.open('Une erreur est survenue lors de la mise à jour de votre profil', 'Fermer');
       }
     });
-
   }
 
 
@@ -101,7 +104,7 @@ export class ProfileComponent implements OnInit {
         id: this.helperService.userId,
       }).subscribe(
         () => {
-          alert('Votre compte a été supprimé avec succès.');
+          this.snackBar.open('Votre compte a été supprimé avec succès.', 'Fermer');
           this.tokenService.clearToken()
           console.log('User and addresses deleted successfully');
 
@@ -112,6 +115,7 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
+
 
   async back() {
     window.history.back();

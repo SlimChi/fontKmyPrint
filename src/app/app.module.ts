@@ -31,6 +31,8 @@ import { CommandeComponent } from './pages/commande/commande.component';
 import { PaimentComponent } from './pages/paiment/paiment.component';
 import { MoncompteComponent } from './pages/moncompte/moncompte.component';
 import { FooterComponent } from './pages/footer/footer.component';
+import {ToastrModule} from "ngx-toastr";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -65,7 +67,9 @@ import { FooterComponent } from './pages/footer/footer.component';
         MatIconModule,
         MatOptionModule,
         MatSelectModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ToastrModule.forRoot(),
+        MatSnackBarModule
     ],
   providers: [
     {
