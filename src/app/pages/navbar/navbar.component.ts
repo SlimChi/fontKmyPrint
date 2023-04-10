@@ -1,6 +1,6 @@
 import {Component, DoCheck, OnInit} from '@angular/core';
 import {TokenService} from "../../services/token-service/token.service";
-import {NavigationEnd, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {StorageService} from "../../services/clearStorage/storage.service";
 import {HelperService} from "../../services/helper/helper.service";
 import {JwtHelperService} from "@auth0/angular-jwt";
@@ -60,13 +60,10 @@ export class NavbarComponent implements OnInit, DoCheck{
   isLogout = false;
 
   ngDoCheck(): void {
-    let url = this.router.url;
-    if (url == '/login' || url == '/register' || url == '/home'|| url == '/commande') {
-      this.isLogout = false;
-    } else {
-      this.isLogout = true;
-    }
+    const url = this.router.url;
+    this.isLogout = !(url === '/login' || url === '/register' || url === '/home' || url === '/commande' || url === '/forgot-password');
   }
+
   switchLanguage(lang: string) {
     this.currentLang = lang; // update the current language
   }

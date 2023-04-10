@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {HelperService} from "../../services/helper/helper.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {forkJoin, Observable} from "rxjs";
 import {AdresseDto} from "../../swagger/services/models/adresse-dto";
 import {UtilisateursService} from "../../swagger/services/services/utilisateurs.service";
 import {UtilisateurDto} from "../../swagger/services/models/utilisateur-dto";
 import {RegisterRequest} from "../../swagger/services/models/register-request";
-import {TypeAdresse} from "../../swagger/services/models/type-adresse";
 import {TokenService} from "../../services/token-service/token.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
@@ -21,7 +19,7 @@ export class ProfileComponent implements OnInit {
 
   userDto: RegisterRequest = {password: '', email: '', nom: '', prenom: '',telephone:''};
   user: UtilisateurDto = {email: '', nom: '', prenom: '',telephone:''};
-
+  isLogout = false;
   users: Array<UtilisateurDto> = [];
   adresse: Array<AdresseDto> = [];
   editMode = false;
@@ -77,12 +75,12 @@ export class ProfileComponent implements OnInit {
       next: () => {
         this.successMsg = 'Votre profil a été mis à jour';
         this.editMode = false;
-        this.snackBar.open('Votre profil a été mis à jour', 'Fermer');
+        this.snackBar.open('Votre profil a été mis à jour', 'Fermer', { duration: 3000 });
       },
       error: (err) => {
         console.error(err);
         this.errorMessage = err.error.errorMessage || 'Une erreur s\'est produite lors de la mise à jour de votre profil';
-        this.snackBar.open('Une erreur est survenue lors de la mise à jour de votre profil', 'Fermer');
+        this.snackBar.open('Une erreur est survenue lors de la mise à jour de votre profil', 'Fermer',{ duration: 3000 });
       }
     });
   }
@@ -102,17 +100,16 @@ export class ProfileComponent implements OnInit {
     if (confirmation) {
       this.userService.deleteUserAndAddresses({
         id: this.helperService.userId,
-      }).subscribe(
-        () => {
+      }).subscribe({
+        next: () => {
           this.snackBar.open('Votre compte a été supprimé avec succès.', 'Fermer');
           this.tokenService.clearToken()
           console.log('User and addresses deleted successfully');
-
         },
-        (error) => {
+        error: (error) => {
           console.error('Error deleting user and addresses', error);
         }
-      );
+      });
     }
   }
 

@@ -23,6 +23,7 @@ import {PaimentComponent} from "./pages/paiment/paiment.component";
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'home', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'confirm-register', component: ConfirmRegisterComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'reset-password', component: ResetPasswordComponent},
@@ -58,6 +59,8 @@ const routes: Routes = [
       {path: 'commande', component: CommandeComponent},
       {path: 'paiment', component: PaimentComponent},
       {path: 'moncompte', component: MoncompteComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
+
       {
         path: '', redirectTo: 'user/home',
         pathMatch: 'full'

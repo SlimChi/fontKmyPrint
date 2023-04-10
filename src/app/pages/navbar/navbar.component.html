@@ -76,7 +76,7 @@
                 <a class="dropdown-item" [routerLink]="'user/panier'"*ngIf="userRole && isAuthenticated()">Mon panier</a>
                 <a class="dropdown-item" [routerLink]="'user/adresses'" *ngIf="userRole && isAuthenticated()">Mes Adresses</a>
 
-                <a (click)="logout()" [routerLink]="'login'" *ngIf="isLogout" class="dropdown-item">Déconnecter</a>
+                <a (click)="logout()" [routerLink]="'login'" *ngIf="isLogout && isAuthenticated()" class="dropdown-item">Déconnecter</a>
                 <a (click)="logout()" [routerLink]="'login'" *ngIf="!isLogout" class="dropdown-item">Se connecter</a>
               </div>
             </button>

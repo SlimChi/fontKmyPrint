@@ -6,9 +6,8 @@ import {AppRoutingModule} from "./app-rooting.module";
 import { HomeComponent } from './pages/home/home.component';
 import {LoginComponent} from "./pages/login/login.component";
 import { PanierComponent } from './pages/panier/panier.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {DatePipe} from "@angular/common";
 import {AdminDashboardComponent} from "./admin/admin-dashboard/admin-dashboard.component";
 import {ManageUsersComponent} from "./admin/manage-users/manage-users.component";
 import { ConfirmRegisterComponent } from './pages/confirm-register/confirm-register.component';
@@ -69,7 +68,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
         MatSelectModule,
         ReactiveFormsModule,
         ToastrModule.forRoot(),
-        MatSnackBarModule
+        MatSnackBarModule,
+        // StripeModule.forRoot('your_stripe_publishable_key')
     ],
   providers: [
     {
